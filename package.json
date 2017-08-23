@@ -2,8 +2,8 @@
   "name": "wubot",
   "version": "0.0.0",
   "private": true,
-  "author": "Alison",
-  "description": "a magical robot",
+  "author": "Alison Wu <alison.wu.0606@gmail.com>",
+  "description": "a magical wubot",
   "dependencies": {
     "hubot": "^2.19.0",
     "hubot-diagnostics": "0.0.2",
