@@ -1,1 +1,1 @@
-web: bin/hubot --name "wubot"
+web: bin/hubot --name "wubot" -a messenger-bot
