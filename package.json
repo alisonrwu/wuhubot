@@ -1,9 +1,9 @@
 {
-  "name": "wubot",
+  "name": "wuhubot",
   "version": "0.0.0",
   "private": true,
   "author": "alisonrwu <alison.wu.0606@gmail.com>",
-  "description": "a magical wubot",
+  "description": "a magical bot that likes to say wuhu",
   "dependencies": {
     "hubot": "^2.19.0",
     "hubot-chunkify": "^1.0.0",
