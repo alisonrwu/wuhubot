@@ -10,32 +10,54 @@
 # Author:
 #   chen-ye
 
-maxLength = process.env.HUBOT_CHUNKIFY_MAX or 320
+
+
+# Description
+#   Long Text to Paste Filter
+#
+# Configuration:
+#   HUBOT_LONGTEXT_MAX
+#   HUBOT_LONGTEXT_MAX_LINES
+#
+# Commands:
+#   None
+#
+# Author:
+#   MrSaints
+
+async = require "async"
+
+HUBOT_LONGTEXT_MAX = process.env.HUBOT_LONGTEXT_MAX or 300
+HUBOT_LONGTEXT_MAX_LINES = process.env.HUBOT_LONGTEXT_MAX_LINES or false
 
 module.exports = (robot) ->
-        
-    _chunkify = (string, newstrings) ->
-        if(string.length > maxLength)
-          while string.length > 0
-            # Split message at last line break, if it exists
-            chunk = string.substring(0, maxLength)
-            breakIndex = if chunk.lastIndexOf('\n') isnt -1 then chunk.lastIndexOf('\n') else maxLength
-            newstrings.push string.substring(0, breakIndex)
-            # Skip char if split on line break
-            breakIndex++ if breakIndex isnt maxLength
-            string = string.substring(breakIndex, string.length)
-        else 
-          newstrings.push(string)
+    @paste = require("hubot-paste/src/paste")(robot, false)
+
+    _flatten = (strings) ->
+        flattened = []
+        for string in strings
+            flattened = flattened.concat string.toString().split(/\r?\n/)
+        flattened
+
+    _pasteIfMaxChars = (s, cb) ->
+        if s.length > HUBOT_LONGTEXT_MAX
+            return @paste.dpaste s, "1", (link) =>
+                cb null, link
+        cb null, s
 
     robot.responseMiddleware (context, next, done) ->
         return unless context.plaintext?
 
         strings = context.strings
-        
-        newstrings = []
-        
-        _chunkify string, newstrings for string in strings
-            
-        context.strings = newstrings
-        
-        next()
+
+        if HUBOT_LONGTEXT_MAX_LINES
+            strings = _flatten strings
+            if strings.length > HUBOT_LONGTEXT_MAX_LINES
+                strings = strings.join("\n")
+                return @paste.dpaste strings, "1", (link) =>
+                    context.strings = [link]
+                    next()
+
+        async.map strings, _pasteIfMaxChars, (err, results) ->
+            context.strings = results
+            next()
