@@ -8,7 +8,7 @@
 #   None
 #
 # Author:
-#   chen-ye
+#   chen-ye, pwang
 
 maxLength = 320
 # maxLength = process.env.HUBOT_CHUNKIFY_MAX or 320
