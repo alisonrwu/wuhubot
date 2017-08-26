@@ -6,7 +6,7 @@
 //
 // Commands:
 //   wuhu bibdaily - for daily reading
-//	 wuhu bib <query> - for showing verses (wuhu bib John 3:16-17; Psalms 5:8)
+//	 wuhu bib <query> - for showing verses `wuhu bib John 3:16-17; Psalms 5:8`
 // 
 // Author:
 //   alisonrwu
@@ -19,7 +19,7 @@ module.exports = function(robot) {
 
 	function formatVerse(body) {
 		var output = body.text + ' ';
-		output += '_'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '_';
+		output += '*'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '*';
 		return output;
 	}
 
@@ -51,9 +51,7 @@ module.exports = function(robot) {
     			msg.send(formatVerse(verse));
     		}
     	});
+		// msg.send("Query a Bible verse like: `wuhu bib John 3:16-17; Psalms 5:8`")
     });
 
-    // robot.respond(/bib /i, function(msg) {
-    	// msg.send("Query a Bible verse like: `wuhu bib John 3:16-17; Psalms 5:8`")
-    // });
 }
