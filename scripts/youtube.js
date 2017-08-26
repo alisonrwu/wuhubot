@@ -6,7 +6,7 @@
 //
 // Commands:
 //   wuhu jam - jam to my most recent song obsession
-//   wuhu save me
+//   save me
 // 
 // Author:
 //   alisonrwu
@@ -17,10 +17,21 @@ var YOUTUBE_BASE_VIDEO = 'https://www.youtube.com/watch?v=';
 
 module.exports = function(robot) {
 
-	robot.respond(/save me/i, function(msg) {
+	robot.hear(/save me/i, function(msg) {
         var save_me = 'GZjt_sA2eso';
 
-        msg.send(YOUTUBE_BASE_VIDEO + save_me);
+        msg.envelope.fb = {
+        	richMsg: {
+        		attachment: {
+        			"type": "video",
+        			"payload": {
+        				"url": YOUTUBE_BASE_VIDEO + save_me
+        			}
+        		}
+        	}
+        }
+
+        msg.send();
     });
 
     robot.respond(/jam/i, function(msg) {
