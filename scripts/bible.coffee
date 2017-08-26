@@ -5,7 +5,7 @@
 #   None
 #
 # Commands:
-#   bible daily - for daily verse reading
+#   wuhu bible daily - for daily verse reading
 #
 # Author:
 #   alisonrwu
