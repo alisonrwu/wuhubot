@@ -29,7 +29,7 @@ module.exports = function(robot) {
         			}
         		}
         	},
-        	attachments: true
+        	attachments: true //TODO: can't send to FB GRAPH API endpoing (message attachments).....
         }
 
         msg.send(YOUTUBE_BASE_VIDEO + save_me);
