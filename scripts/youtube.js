@@ -45,7 +45,7 @@ module.exports = function(robot) {
 				if(json.nextPageToken) {
 					flipPage(json.nextPageToken);
 				} else {
-					msg.send(YOUTUBE_BASE_VIDEO + getLastVideoId(json.items));
+					msg.send(YOUTUBE_BASE_VIDEO + getLastVideoId(json.items) + '&list=' + YOUTUBE_PLAYLIST_ID);
 				}
 			});
 		}
