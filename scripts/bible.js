@@ -23,6 +23,23 @@ module.exports = function(robot) {
 		return output;
 	}
 
+    function sortVerses(a, b) {
+        if(a.chapter < b.chapter) {
+            return -1;
+        }
+        if(a.chapter > b.chapter) {
+            return 1;
+        }
+        //a.chapter == b.chapter
+        if(a.verse < b.verse) {
+            return -1;
+        }
+        if(a.verse > b.verse) {
+            return 1;
+        }
+        return 0;
+    }
+
     robot.respond(/bib day/i, function(msg) {
     	msg.http(BASE_URL).query({
     		passage: 'votd',
@@ -47,6 +64,7 @@ module.exports = function(robot) {
     			msg.send("Error!!!");
     		}
     		var verses = JSON.parse(body);
+            verses.sort(sortVerses);
     		for(var verse of verses) {
     			msg.send(formatVerse(verse));
     		}
