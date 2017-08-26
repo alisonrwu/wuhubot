@@ -28,7 +28,8 @@ module.exports = function(robot) {
         				"url": YOUTUBE_BASE_VIDEO + save_me
         			}
         		}
-        	}
+        	},
+        	attachments: true
         }
 
         msg.send(YOUTUBE_BASE_VIDEO + save_me);
