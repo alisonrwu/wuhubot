@@ -5,7 +5,8 @@
 //   None
 //
 // Commands:
-//   wuhu bible daily - for daily verse reading
+//   wuhu bibdaily - for daily reading
+//	 wuhu bib <query> - for showing verses (wuhu bib John 3:16-17; Psalms 5:8)
 // 
 // Author:
 //   alisonrwu
@@ -16,7 +17,13 @@ var BASE_URL = 'http://labs.bible.org/api/';
 
 module.exports = function(robot) {
 
-    robot.respond(/bible daily/i, function(msg) {
+	function formatVerse(body) {
+		var output = body.text + ' ';
+		output += '_'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '_';
+		return output;
+	}
+
+    robot.respond(/bibdaily/i, function(msg) {
     	msg.http(BASE_URL).query({
     		passage: 'votd',
     		type: 'json'
@@ -24,14 +31,29 @@ module.exports = function(robot) {
     		if(err) {
     			msg.send("Error!!!");
     		}
-    		msg.send(format(JSON.parse(body)[0]));
+    		var votd = JSON.parse(body)[0];
+    		msg.send(formatVerse(votd));
     	});
-
-    	function format(body) {
-    		var output = '';
-    		output += body.text + ' ';
-    		output += '*'+body.bookname +' '+ body.chapter +':'+ body.verse+'*';
-    		return output;
-    	}
     });
+
+    robot.respond(/bib (.*)/i, function(msg) {
+    	var input = msg.match[1].trim();
+
+    	msg.http(BASE_URL).query({
+    		passage: input,
+    		type: 'json'
+    	}).get()(function(err,res,body) {
+    		if(err) {
+    			msg.send("Error!!!");
+    		}
+    		var verses = JSON.parse(body);
+    		for(var verse of verses) {
+    			msg.send(formatVerse(verse));
+    		}
+    	});
+    });
+
+    // robot.respond(/bib /i, function(msg) {
+    	// msg.send("Query a Bible verse like: `wuhu bib John 3:16-17; Psalms 5:8`")
+    // });
 }
