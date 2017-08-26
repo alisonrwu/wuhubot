@@ -18,8 +18,8 @@ var BASE_URL = 'http://labs.bible.org/api/';
 module.exports = function(robot) {
 
 	function formatVerse(body) {
-		var output = body.text + ' ';
-		output += '*'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '*';
+		var output = '*'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '*';
+		output += body.text;
 		return output;
 	}
 
