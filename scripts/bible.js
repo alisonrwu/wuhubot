@@ -1,11 +1,11 @@
 // Description:
-//   holiday detector script
+//   Read the Bible
 //
 // Configuration:
 //   None
 //
 // Commands:
-//   wuhu bibdaily - for daily reading
+//   wuhu bib day - for daily reading
 //	 wuhu bib <query> - for showing verses `wuhu bib John 3:16-17; Psalms 5:8`
 // 
 // Author:
@@ -19,11 +19,11 @@ module.exports = function(robot) {
 
 	function formatVerse(body) {
 		var output = '*'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '*';
-		output += body.text;
+		output += ' ' + body.text;
 		return output;
 	}
 
-    robot.respond(/bibdaily/i, function(msg) {
+    robot.respond(/bib day/i, function(msg) {
     	msg.http(BASE_URL).query({
     		passage: 'votd',
     		type: 'json'
