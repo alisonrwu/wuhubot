@@ -31,7 +31,7 @@ module.exports = function(robot) {
         	}
         }
 
-        msg.send();
+        msg.send(YOUTUBE_BASE_VIDEO + save_me);
     });
 
     robot.respond(/jam/i, function(msg) {
