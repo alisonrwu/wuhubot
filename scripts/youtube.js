@@ -51,7 +51,7 @@ module.exports = function(robot) {
 			query.pageToken = token;
 			msg.http(yt_playlistItems).query(query).get()(function(err,res,body) {
 				if(err) {
-					msg.send("Error!!!");
+					return msg.send("Error!!!");
 				}
 				var json = JSON.parse(body);
 				if(json.nextPageToken) {

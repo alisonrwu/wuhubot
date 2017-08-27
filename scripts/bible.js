@@ -27,7 +27,7 @@ module.exports = function(robot) {
     		type: 'json'
     	}).get()(function(err,res,body) {
     		if(err) {
-    			msg.send("Error!!!");
+    			return msg.send("Error!!!");
     		}
     		var votd = JSON.parse(body)[0];
     		msg.send(formatVerse(votd));
@@ -42,7 +42,7 @@ module.exports = function(robot) {
     		type: 'json'
     	}).get()(function(err,res,body) {
     		if(err) {
-    			msg.send("Error!!!");
+    			return msg.send("Error!!!");
     		}
     		var verses = JSON.parse(body);
     		for(var verse of verses) {
