@@ -19,7 +19,7 @@ module.exports = function(robot) {
 		return 'It is ' + data.main.temp + '°C in ' + data.name +', '+ data.sys.country + ' with ' + data.weather[0].description + '.';
 	}
 
-	robot.hear(/weather (\w+)/i, function(msg) {
+	robot.hear(/^weather (\w+)/i, function(msg) {
 		var city = msg.match[1];
 
 		msg.http(WEATHER_API).query({

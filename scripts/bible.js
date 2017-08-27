@@ -1,12 +1,12 @@
 // Description:
-//   Read the Bible
+//   Read the Holy Bible
 //
 // Configuration:
 //   None
 //
 // Commands:
-//   wuhu bib day - for daily reading
-//	 wuhu bib <query> - for showing verses `wuhu bib John 3:16-17; Psalms 5:8`
+//   hb day - for daily reading
+//	 hb <query> - for showing verses `wuhu bib John 3:16-17; Psalms 5:8`
 // 
 // Author:
 //   alisonrwu
@@ -21,7 +21,7 @@ module.exports = function(robot) {
 		return '*'+ body.bookname +' '+ body.chapter +':'+ body.verse+ '* ' + body.text;
 	}
 
-    robot.respond(/bib day/i, function(msg) {
+    robot.hear(/^hb day/i, function(msg) {
     	msg.http(BASE_URL).query({
     		passage: 'votd',
     		type: 'json'
@@ -34,7 +34,7 @@ module.exports = function(robot) {
     	});
     });
 
-    robot.respond(/bib (.*)/i, function(msg) {
+    robot.hear(/^hb (.*)/i, function(msg) {
     	var input = msg.match[1].trim();
 
     	msg.http(BASE_URL).query({

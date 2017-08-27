@@ -17,7 +17,7 @@ var YOUTUBE_BASE_VIDEO = 'https://www.youtube.com/watch?v=';
 
 module.exports = function(robot) {
 
-	robot.hear(/save me/i, function(msg) {
+	robot.hear(/save\s*me/i, function(msg) {
         var save_me = 'GZjt_sA2eso';
 
         msg.envelope.fb = {
@@ -45,9 +45,9 @@ module.exports = function(robot) {
 			'playlistId': YOUTUBE_PLAYLIST_ID
 		};
 
-    	flipPage(null);
+    	flipToLastPage(null);
 
-		function flipPage(token) {
+		function flipToLastPage(token) {
 			query.pageToken = token;
 			msg.http(yt_playlistItems).query(query).get()(function(err,res,body) {
 				if(err) {
@@ -55,7 +55,7 @@ module.exports = function(robot) {
 				}
 				var json = JSON.parse(body);
 				if(json.nextPageToken) {
-					flipPage(json.nextPageToken);
+					flipToLastPage(json.nextPageToken);
 				} else {
 					msg.send(YOUTUBE_BASE_VIDEO + getLastVideoId(json.items) + '&list=' + YOUTUBE_PLAYLIST_ID);
 				}

@@ -37,20 +37,20 @@ module.exports = function(robot) {
 		return '[ ]';
 	}
 
-	robot.hear(/todo list/i, function(msg) {
+	robot.hear(/^todo list/i, function(msg) {
 		if(todos.length < 1) {
 			return msg.send('Your `TODO` list is empty.');
 		}
 		msg.send(formatList(todos));
 	});
 
-	robot.hear(/todo add (.*)/i, function(msg) {
+	robot.hear(/^todo add (.*)/i, function(msg) {
 		var task = msg.match[1];
 		todos.push(new Task(task));
 		msg.send('Added task #' + todos.length);
 	});
 
-	robot.hear(/todo rmv (all)?(\d*)?/i, function(msg) {
+	robot.hear(/^todo rmv (all)?(\d*)?/i, function(msg) {
 		var all = msg.match[1];
 		var index = msg.match[2];
 		if(all){
@@ -65,7 +65,7 @@ module.exports = function(robot) {
 		}
 	});
 
-	robot.hear(/todo check (\d*)/i, function(msg) {
+	robot.hear(/^todo check (\d*)/i, function(msg) {
 		var index = msg.match[1];
 		if(index < 1 || index > todos.length) {
 			return msg.send('Please think inside the list... and return an available index, it is currently ' + todos.length + ' tasks long.')
@@ -74,7 +74,7 @@ module.exports = function(robot) {
 		msg.send('Checked task #'+ index);
 	});
 
-	robot.hear(/todo clean/i, function(msg) {
+	robot.hear(/^todo clean/i, function(msg) {
 		if(todos.length < 1) {
 			return msg.send('There is nothing to clean, your `TODO` list is empty.');
 		}
