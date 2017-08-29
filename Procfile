@@ -1,1 +1,1 @@
-web: bin/hubot --name "wuhu" -a fb
+web: bin/hubot --name "wuhu" -a fb-adapter

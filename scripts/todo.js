@@ -48,6 +48,7 @@ module.exports = function(robot) {
 		var task = msg.match[1];
 		todos.push(new Task(task));
 		msg.send('Added task #' + todos.length);
+		msg.send(formatList(todos));
 	});
 
 	robot.hear(/^todo rmv (all)?(\d*)?/i, function(msg) {
@@ -61,8 +62,9 @@ module.exports = function(robot) {
 				return msg.send('Please think inside the list... and return an available index, it is currently ' + todos.length + ' tasks long.')
 			}
 			var removedTask = todos.splice(index-1, 1);
-			msg.send('Removed task #' + index + ' ' + removedTask.text);
+			msg.send('Removed task #' + index + ' ' + removedTask[0].text);
 		}
+		msg.send(formatList(todos));
 	});
 
 	robot.hear(/^todo check (\d*)/i, function(msg) {
@@ -72,6 +74,7 @@ module.exports = function(robot) {
 		}
 		todos[index-1].checked = true;
 		msg.send('Checked task #'+ index);
+		msg.send(formatList(todos));
 	});
 
 	robot.hear(/^todo clean/i, function(msg) {
@@ -86,10 +89,11 @@ module.exports = function(robot) {
 			}
 		}
 		if(removed == 0) {
-			return msg.emote('No done tasks to remove... you should really go do things with your life.');
+			return msg.emote('No done tasks to remove... you should really go do something with your life.');
 		} else if(removed == 1) {
 			return msg.send('Removed ' + removed + ' done task');
 		}
 		msg.send('Removed ' + removed + ' done tasks');
+		msg.send(formatList(todos));
 	});
 }

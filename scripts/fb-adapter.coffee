@@ -46,9 +46,7 @@ class FBMessenger extends Adapter
 
     send: (envelope, strings...) ->
         @_sendText envelope.user.id, msg for msg in strings
-        if envelope.fb?.richMsg? and envelope.fb.attachments?
-            @_sendRichAttachment envelope.user.id, envelope.fb.richMsg
-        else if envelope.fb?.richMsg?
+        if envelope.fb?.richMsg?
             @_sendRich envelope.user.id, envelope.fb.richMsg
 
     _sendText: (user, msg) ->
@@ -67,27 +65,23 @@ class FBMessenger extends Adapter
         else
             data.message.text = msg
 
-        @_sendAPI data, @messageEndpoint
+        @_sendAPI data,@messageEndpoint
 
     _sendRich: (user, richMsg) ->
         data = {
             recipient: {id: user},
             message: richMsg
         }
-        @_sendAPI data, @messageEndpoint
-
-    _sendRichAttachement: (user, richMsg) ->
-        data = {
-            recipient: {id: user},
-            message: richMsg
-        }
-        @_sendAPI data, @messageAttachmentEndpoint
+        if(richMsg.attachment?.payload?.url?)
+            @_sendAPI data,@messageAttachmentEndpoint
+        else
+            @_sendAPI data,@messageEndpoint
 
     _sendAPI: (data, endpoint) ->
       @_dataQueue.push data
       if @_dataQueue.length == 1
           # Nothing else is queued up, so initiate the API request
-          @_sendData(endpoint)
+          @_sendData endpoint
 
     _sendData: (endpoint) ->
         self = @
