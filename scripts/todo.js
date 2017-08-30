@@ -27,7 +27,7 @@ module.exports = function(robot) {
 		for(var i=0; i<todos.length; i++) {
 			output += '\n'+ (i+1) +'. '+ todos[i].text +' '+ checkBox(todos[i].checked);
 		}
-		return output;
+		return output==''? 'Your `TODO` list is empty.' : output;
 	}
 
 	function checkBox(b) {
@@ -59,7 +59,7 @@ module.exports = function(robot) {
 			todos = [];
 		} else if(index) {
 			if(index < 1 || index > todos.length) {
-				return msg.send('Please think inside the list... and return an available index, it is currently ' + todos.length + ' tasks long.')
+				return msg.send('Please think inside the list... and give an available index, it is currently ' + todos.length + ' tasks long.')
 			}
 			var removedTask = todos.splice(index-1, 1);
 			msg.send('Removed task #' + index + ' ' + removedTask[0].text);
@@ -70,7 +70,7 @@ module.exports = function(robot) {
 	robot.hear(/^todo check (\d*)/i, function(msg) {
 		var index = msg.match[1];
 		if(index < 1 || index > todos.length) {
-			return msg.send('Please think inside the list... and return an available index, it is currently ' + todos.length + ' tasks long.')
+			return msg.send('Please think inside the list... and give an available index, it is currently ' + todos.length + ' tasks long.')
 		}
 		todos[index-1].checked = true;
 		msg.send('Checked task #'+ index);
@@ -85,15 +85,15 @@ module.exports = function(robot) {
 		for(var i=0; i<todos.length; i++) {
 			if(todos[i].checked) {
 				todos.splice(i, 1);
+				i--;
 				removed++;
 			}
 		}
 		if(removed == 0) {
-			return msg.emote('No done tasks to remove... you should really go do something with your life.');
-		} else if(removed == 1) {
-			return msg.send('Removed ' + removed + ' done task');
+			return msg.emote('No tasks are done... you should really go do something with your life.');
 		}
-		msg.send('Removed ' + removed + ' done tasks');
+		var task = removed==1? 'task' : 'tasks';
+		msg.send('Removed ' + removed + ' done ' + task);
 		msg.send(formatList(todos));
 	});
 }
