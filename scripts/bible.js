@@ -6,7 +6,7 @@
 //
 // Commands:
 //   hb day - for daily verse from the Holy Bible
-//	 hb <query> - for showing verses, try `hb John 3:16-17; Psalms 5:8`
+//	 hb <query> - for showing verses, try 'hb John 3:16-17; Psalms 5:8'
 // 
 // Author:
 //   alisonrwu
