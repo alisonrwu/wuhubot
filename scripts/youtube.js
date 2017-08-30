@@ -5,8 +5,8 @@
 //   None
 //
 // Commands:
-//   wuhu jam - jam to my most recent song obsession
-//   save me
+//   wuhu jam - to my most recent song obsession
+//   save me [alt]
 // 
 // Author:
 //   alisonrwu
@@ -17,8 +17,8 @@ var YOUTUBE_BASE_VIDEO = 'https://www.youtube.com/watch?v=';
 
 module.exports = function(robot) {
 
-	robot.hear(/save\s*me/i, function(msg) {
-        var save_me = 'GZjt_sA2eso';
+	robot.hear(/save\s*me(\s*alt)?/i, function(msg) {
+		var save_me = msg.match[1] == null? 'GZjt_sA2eso' : 'FuuXh5Oi84Y';
 
         msg.envelope.fb = {
         	richMsg: {
@@ -29,7 +29,7 @@ module.exports = function(robot) {
         			}
         		}
         	},
-        	attachments: true //TODO: can't send to FB GRAPH API endpoing (message attachments).....
+        	attachments: true //TODO: can't send to FB GRAPH API endpoint (message attachments).....
         }
 
         msg.send(YOUTUBE_BASE_VIDEO + save_me);
