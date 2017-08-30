@@ -25,7 +25,7 @@ module.exports = function(robot) {
 	function formatList(todos) {
 		var output = '';
 		for(var i=0; i<todos.length; i++) {
-			output += '\n'+ (i+1) +'. '+ todos[i].text +' '+ checkBox(todos[i].checked);
+			output += '\n'+ (i+1) +'. '+ checkBox(todos[i].checked) +' '+ todos[i].text;
 		}
 		return output==''? 'Your `TODO` list is empty.' : output;
 	}
