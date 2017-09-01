@@ -1,3 +1,15 @@
+# Description
+#   Random scripts
+#
+# Configuration:
+#   None
+#
+# Commands:
+#   rand <min> <max> - random number generator, defaults 0-100
+#
+# Author:
+#   chen-ye
+
 module.exports = (robot) ->
 
 	pandaReplies = ['Panda? Panda!', 'I like pandas too', 'You don\'t like pandas? I don\'t like you']
@@ -13,5 +25,10 @@ module.exports = (robot) ->
 
 	robot.respond /plz/i, (res) ->
 		res.emote 'no'
+
+	robot.hear /^rand( \d+)?( \d+)?/i, (res) ->
+		min = parseInt(res.match[1]) || 0;
+		max = parseInt(res.match[2]) || 100;
+		res.send Math.floor(Math.random() * (max+1-min) + min)
 
 	
