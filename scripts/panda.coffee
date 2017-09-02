@@ -8,7 +8,7 @@
 #   rng <min> <max> - random number generator, defaults 0-100
 #
 # Author:
-#   chen-ye
+#   alisonrwu
 
 module.exports = (robot) ->
 
