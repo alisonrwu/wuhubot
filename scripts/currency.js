@@ -5,7 +5,7 @@
 //   None
 //
 // Commands:
-//   <amount> <code> to <code> - currency exchange rates, updated hourly. code like CAD,HKD,BTC
+//   <amount> <code> to <code> - Currency exchange rates, updated hourly (code like CAD, HKD, BTC)
 // 
 // Author:
 //   alisonrwu
@@ -39,7 +39,7 @@ module.exports = function(robot) {
 			}
 			var data = JSON.parse(body);
 			setupRates(data);
-			var conversion = fx(amount).from(fromCurr).to(toCurr);
+			var conversion = fx(amount).from(fromCurr).to(toCurr); //TODO: negative amount input
 			msg.send('I believe ' + amount+' '+fromCurr + ' is worth ' + conversion+' '+toCurr);
 		})
 	})
