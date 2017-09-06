@@ -29,6 +29,6 @@ module.exports = (robot) ->
 	robot.hear /^rng( \d+)?( \d+)?/i, (res) ->
 		min = parseInt(res.match[1]) || 0;
 		max = parseInt(res.match[2]) || 100;
-		res.send (Math.floor(Math.random() * (max+1-min)) + min)
+		res.send 'Your number is ' + (Math.floor(Math.random() * (max+1-min)) + min)
 
 	
